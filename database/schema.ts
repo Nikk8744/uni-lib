@@ -10,7 +10,7 @@ export const users = pgTable('users', {
     email: text('email').notNull().unique(),
     universityId: integer("university_id").notNull().unique(),
     password: text('password').notNull(),
-    universityCard: text('university_card').notNull(),
+    universityCard: text('university_card'),
     status: STATUS_ENUM('status').default('PENDING'),
     role: ROLE_ENUM('role').default('USER'),
     lastActivityDate: date('last_acticity_date').defaultNow(),
