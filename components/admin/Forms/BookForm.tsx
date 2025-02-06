@@ -17,6 +17,8 @@ import { useRouter } from 'next/navigation'
 import { bookSchema } from '@/lib/validations'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { createBook } from '@/lib/admin/actions/book'
+import { toast } from '@/hooks/use-toast'
 interface Props extends Partial<Book> {
     type?: "create" | "update";
 }
@@ -42,7 +44,21 @@ const BookForm = ({ type, ...book  }: Props) => {
     })
 
     const onSubmit = async (values: z.infer<typeof bookSchema>) => {
-        console.log("The values are",values);
+        // console.log("The values are",values);    
+        const result = await createBook(values);
+        if (result.success) {
+            toast({
+                title: "Success",
+                description: "Book created successfully",
+            }) 
+            router.push(`/admin/book${result.data.id}` ); 
+        } else {
+            toast({
+                title: "Error",
+                description: "Failed to create book",
+                variant: "destructive"
+            })
+        }
     }
 
   return (

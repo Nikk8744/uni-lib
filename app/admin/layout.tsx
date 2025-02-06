@@ -11,15 +11,17 @@ import { eq } from 'drizzle-orm';
 const layout = async ({children}: {children: ReactNode}) => {
 
     const session = await auth();
-    
+
     if (!session?.user?.id) redirect('/sign-in')
 
+    // only admin can access this route
     const isAdmin = await db
           .select({isAdmin: users.role})
           .from(users)
           .where(eq(users.id, session.user.id))
           .limit(1)
           .then((res) => res[0]?.isAdmin === "ADMIN")
+
     if(!isAdmin) redirect('/')      
 
   return (
