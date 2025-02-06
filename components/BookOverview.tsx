@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import React from 'react'
-import { Button } from './ui/button'
 import BookCover from './BookCover'
 import BorrowBook from './BorrowBook'
 import { db } from '@/database/drizzle'
@@ -18,8 +17,8 @@ const BookOverview = async ({
     // total_copies,
     totalCopies, 
     description, 
-    color, 
-    colorUrl,
+    // color, 
+    coverColor,
     // cover, 
     coverUrl,
     rating, 
@@ -39,7 +38,8 @@ const BookOverview = async ({
 
     const borrowingEligibility = {
         isEligible: availableCopies > 0 && user.status === "APPROVED",
-        message: availableCopies <= 0 ? "Bool is not available" : "You are not eligible to borrow this book",
+        message: availableCopies <= 0 
+            ? "Book is not available" : "You are not eligible to borrow this book",
     }
 
   return (
@@ -72,10 +72,10 @@ const BookOverview = async ({
 
         <div className='relative flex flex-1 justify-center'>
             <div className='relative'>
-                <BookCover variant="wide" className="z-10" coverColor={color} coverImage={coverUrl} />
+                <BookCover variant="wide" className="z-10" coverColor={coverColor} coverImage={coverUrl} />
 
                 <div className='absolute left-16 top-10 rotate-12 opacity-40'>
-                    <BookCover variant="wide" coverColor={color} coverImage={coverUrl} />
+                    <BookCover variant="wide" coverColor={coverColor} coverImage={coverUrl} />
                 </div>
             </div>
         </div>

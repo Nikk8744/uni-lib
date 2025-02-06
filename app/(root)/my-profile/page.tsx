@@ -6,7 +6,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <>
+    <>  <h1 className='text-white text-center text-3xl font-semibold mb-10'>My Profile</h1>
         <form action={ async () => {
             "use server";
 
